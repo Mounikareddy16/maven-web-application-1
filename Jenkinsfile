@@ -10,7 +10,7 @@ pipeline {
     }
     parameters {
         string(name: 'BRANCH_NAME', defaultValue: 'master', description: 'Branch to build')
-        choice(name: 'ENVIRONMENT', choices: ['development', 'test'], description: 'Branch to build')
+        choice(name: 'ENVIRONMENT', choices: ['development', 'test', 'testing'], description: 'Branch to build')
         booleanParam(name: 'RUN_SAST_TEST', defaultValue: true, description: 'Run Snyk Test')
     }
     stages {	

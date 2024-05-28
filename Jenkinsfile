@@ -6,10 +6,6 @@ pipeline {
         SNYK_API_TOKEN = credentials('test-snyk-api')
     }
 
-    tools {
-        nodejs 'NodeJS'  // Use the name of the NodeJS installation defined in Jenkins
-    }
-
     stages {
         stage('Print Node and npm Version') {
             steps {

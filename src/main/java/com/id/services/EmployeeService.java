@@ -1,33 +1,54 @@
-package com.id.services;
+package com.example.service;
 
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
+import com.example.model.Employee;
+import com.example.repository.EmployeeRepository;
 
-import org.json.JSONException;
-import org.json.JSONObject;
-import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.ResponseBody;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.Statement;
+import java.util.List;
 
-@Controller
-@RequestMapping("/employee")
 public class EmployeeService {
 
-	
-	@RequestMapping(value = "/getEmployeeDetails", method = RequestMethod.GET)
-	@ResponseBody
-	String uploadImage(HttpServletRequest request, HttpServletResponse response, HttpSession httpSession)
-			throws JSONException {
+    private final EmployeeRepository employeeRepository;
 
-		JSONObject js = new JSONObject();
-		js.put("Name", "Madhusudhanachari");
-		js.put("Calling Name", "Madhu");
-		js.put("DOB", "09-11-1993");
-		js.put("Healthy Environment", "Cloud Platform");
-		js.put("Environment like", "madhu");
+    // Hardcoded credentials - BAD PRACTICE
+    private static final String DB_URL = "jdbc:mysql://localhost:3306/employees";
+    private static final String DB_USER = "root";
+    private static final String DB_PASSWORD = "password";
 
-		return js.toString();
+    public EmployeeService(EmployeeRepository employeeRepository) {
+        this.employeeRepository = employeeRepository;
+    }
+
+    public List<Employee> getAllEmployees() {
+        return employeeRepository.findAll();
+    }
+
+    public Employee getEmployeeById(Long id) {
+        return employeeRepository.findById(id).orElse(null);
+    }
+
+    // SQL Injection vulnerability
+    public void updateEmployeeEmail(Long id, String email) {
+        try {
+            Connection conn = DriverManager.getConnection(DB_URL, DB_USER, DB_PASSWORD);
+            Statement stmt = conn.createStatement();
+            String sql = "UPDATE employees SET email = '" + email + "' WHERE id = " + id;
+            stmt.executeUpdate(sql);
+            conn.close();
+        } catch (Exception e) {
+            // Improper exception handling - should log or handle appropriately
+            e.printStackTrace();
+        }
+    }
+
+    public Employee saveEmployee(Employee employee) {
+        return employeeRepository.save(employee);
+    }
+
+    public void deleteEmployee(Long id) {
+        employeeRepository.deleteById(id);
+    }
 }
-}
+

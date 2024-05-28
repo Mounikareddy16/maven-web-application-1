@@ -11,7 +11,7 @@ pipeline {
     parameters {
         //string(name: 'BRANCH_NAME', choices: ['master', 'development', 'test'], description: 'Branch to build')
         choice(name: 'ENVIRONMENT', choices: ['master', 'development', 'test'], description: 'Branch to build')
-        booleanParam(name: 'RUN_SNYK_TEST', defaultValue: true, description: 'Run Snyk Test')
+        booleanParam(name: 'RUN_SAST_TEST', defaultValue: true, description: 'Run Snyk Test')
     }
     stages {	
         stage('Clone Repository') {
@@ -20,9 +20,9 @@ pipeline {
             }
         }
 
-        stage('Run Snyk Test') {
+        stage('Run SAST Test') {
             when {
-                expression { params.RUN_SNYK_TEST }
+                expression { params.RUN_SAST_TEST }
             }
             steps {
                 sh '''

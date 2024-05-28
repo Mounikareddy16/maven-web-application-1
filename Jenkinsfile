@@ -28,6 +28,7 @@ pipeline {
                     npm install -g snyk
                     snyk auth ${SNYK_API_TOKEN}
                     snyk code test
+                    echo 'test'
                 '''
                }
             }

@@ -34,8 +34,11 @@ pipeline {
                 '''
             }
         }
-
- 
+        stage('Report') {
+            steps {
+                echo 'hello world'
+            }
+        }    
     }
 
 

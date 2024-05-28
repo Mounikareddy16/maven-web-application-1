@@ -25,7 +25,6 @@ pipeline {
                 expression { params.RUN_SNYK_TEST }
             }
             steps {
-                dir('maven-web-application-1') {  // Ensure the correct directory 
                 sh '''
                     npm install -g snyk
                     snyk auth ${SNYK_API_TOKEN}

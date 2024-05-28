@@ -5,7 +5,9 @@ pipeline {
         GITHUB_CREDENTIALS_ID = 'git-creds'
         SNYK_API_TOKEN = credentials('test-snyk-api')
     }
-
+    tools {
+        nodejs 'NodeJS'
+    }
     stages {
         stage('Print Node and npm Version') {
             steps {

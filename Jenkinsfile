@@ -9,8 +9,8 @@ pipeline {
         nodejs 'NodeJS'  // Use the name of the NodeJS installation defined in Jenkins
     }
     parameters {
-        string(name: 'BRANCH_NAME', choices: ['master', 'development', 'test'], description: 'Branch to build')
-        //choice(name: 'ENVIRONMENT', choices: ['development', 'test'], description: 'Deployment environment')
+        //string(name: 'BRANCH_NAME', choices: ['master', 'development', 'test'], description: 'Branch to build')
+        choice(name: 'ENVIRONMENT', choices: ['master', 'development', 'test'], description: 'Branch to build')
         booleanParam(name: 'RUN_SNYK_TEST', defaultValue: true, description: 'Run Snyk Test')
     }
     stages {	

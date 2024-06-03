@@ -22,9 +22,9 @@ pipeline {
         stage('Run SAST Test') {
             steps {
                 sh '''
-                    //npm install -g snyk
+                    npm install -g snyk
                     snyk auth ${SNYK_API_TOKEN}
-                    snyk code test --severity-threshold=high
+                    snyk code test --severity-threshold=high --fail-on=all
                 '''
                }
             }

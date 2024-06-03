@@ -8,21 +8,10 @@ pipeline {
 
     tools {
         nodejs 'NodeJS'  // Use the name of the NodeJS installation defined in Jenkins
-        maven 'Maven'  // Use the name of the Maven installation defined in Jenkins
     }
 
     parameters {
         string(name: 'BRANCH_NAME', defaultValue: 'main', description: 'Branch to build')
-    }
-
-    triggers {
-        // Trigger the pipeline when a PR is created or updated
-        githubPullRequest {
-            admins(['github-username'])
-            useGitHubHooks()
-            triggerPhrase('Jenkins, test this please')
-            onlyTriggerPhrase()
-        }
     }
 
     stages {
@@ -32,11 +21,7 @@ pipeline {
                     url: 'https://github.com/Mounikareddy16/maven-web-application-1.git',
                     credentialsId: "${GITHUB_CREDENTIALS_ID}",
                     branch: "${params.BRANCH_NAME}",
-                    extensions: [
-                        [$class: 'CloneOption', noTags: false, shallow: false, depth: 0, timeout: 10],
-                        [$class: 'CleanBeforeCheckout'],
-                        [$class: 'PruneStaleBranch']
-                    ]
+
                 )
             }
         }

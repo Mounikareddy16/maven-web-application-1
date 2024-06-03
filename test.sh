@@ -4,6 +4,8 @@
 get_new_files() {
   # Get the name of the current branch
   current_branch=$(git branch --show-current)
+  print $current_branch
+  current_branch='testing'
 
   # Get the name of the default branch (usually 'main' or 'master')
   default_branch=$(git remote show origin | grep 'HEAD branch' | cut -d' ' -f5)

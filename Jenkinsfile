@@ -16,7 +16,7 @@ pipeline {
         }
         stage('new file added') {
             steps {
-               sh 'sh test.sh' 
+               sh 'sh test.sh env.BRANCH_NAME'
             }
         }        
         stage('Run SAST Test') {

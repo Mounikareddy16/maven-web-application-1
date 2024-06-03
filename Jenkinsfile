@@ -18,11 +18,7 @@ pipeline {
 
         stage('Run SAST Test') {
             steps {
-                sh '''
-                    npm install -g snyk
-                    snyk auth ${SNYK_API_TOKEN}
-                    snyk code test
-                '''
+                sh 'snykSecurity severity: 'high', snykInstallation: 'snyk@latest', snykTokenId: 'b367fcaf-8e15-4ef5-ae9a-dcc94f43df5a''
                }
             }
     

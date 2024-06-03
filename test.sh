@@ -15,7 +15,7 @@ get_new_files() {
   #echo $default_branch
   #echo 'test'
   #echo $current_branch
-  new_files=$(git diff --name-only --diff-filter=A origin/$default_branch...$current_branch)
+  new_files=$(git diff --name-only --diff-filter=A origin/$default_branch..$current_branch)
   #git checkout master 
   #new_files=$(git diff --name-only --diff-filter=A master bugfix)
 

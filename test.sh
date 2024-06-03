@@ -13,6 +13,7 @@ get_new_files() {
 
   # Get the list of new files added in the current branch compared to the default branch
   echo $default_branch
+  echo 'test'
   echo $current_branch
   new_files=$(git diff --name-only --diff-filter=A origin/$default_branch...$current_branch)
   #git checkout master 

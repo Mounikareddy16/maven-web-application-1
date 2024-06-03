@@ -3,7 +3,7 @@ echo 'Hi world'
 # Function to get new files added in the current branch
 get_new_files() {
   # Get the name of the current branch
-  current_branch=$(git branch --show-current)
+  current_branch=bugfix
 
   # Get the name of the default branch (usually 'main' or 'master')
   default_branch=$(git remote show origin | grep 'HEAD branch' | cut -d' ' -f5)
@@ -15,7 +15,7 @@ get_new_files() {
   echo $default_branch
   echo 'test'
   echo $current_branch
-  new_files=$(git diff --name-only --diff-filter=A origin/$default_branch...bugfix)
+  new_files=$(git diff --name-only --diff-filter=A origin/$default_branch...$curent_branch)
   #git checkout master 
   #new_files=$(git diff --name-only --diff-filter=A master bugfix)
 

@@ -3,7 +3,7 @@ echo 'Hi world'
 # Function to get new files added in the current branch
 get_new_files() {
   # Get the name of the current branch
-  current_branch='bugfix'
+  current_branch='testing'
 
   # Get the name of the default branch (usually 'main' or 'master')
   default_branch=$(git remote show origin | grep 'HEAD branch' | cut -d' ' -f5)

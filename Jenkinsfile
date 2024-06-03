@@ -17,6 +17,7 @@ pipeline {
         stage('new file added') {
             steps {
                sh 'pwd'
+               sh 'chmod 777 test.sh'
                sh 'ls -l'
                sh 'sh test.sh' 
             }

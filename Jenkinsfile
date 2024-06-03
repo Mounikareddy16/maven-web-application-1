@@ -16,6 +16,7 @@ pipeline {
         }
         stage('new file added') {
             steps {
+               sh 'pwd'
                sh 'sh test.sh' 
             }
         }        

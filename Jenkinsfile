@@ -18,7 +18,7 @@ pipeline {
 
         stage('Run SAST Test') {
             steps {
-                snykSecurity severity: 'high', snykInstallation: 'snyk@latest', snykTokenId: 'test-snyk-api'
+                snykSecurity severity: 'high', snykInstallation: 'snyk@latest', snykTokenId: 'SNYK_API_TOKEN'
                }
             }
     

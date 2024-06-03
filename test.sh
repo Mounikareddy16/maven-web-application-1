@@ -13,15 +13,9 @@ get_new_files() {
   git fetch origin
 
   # Get the list of new files added in the current branch compared to the default branch
-  #echo $default_branch
-  #echo 'test'
-  #echo $current_branch
-  new_files=$(git diff --name-only --diff-filter=A origin/$default_branch..$current_branch)
-  #git checkout master 
-  #new_files=$(git diff --name-only --diff-filter=A master bugfix)
-
+  new_files=$(git diff --name-only --diff-filter=A origin/master..testing)
+  
   echo "$new_files"
-  #echo 'test'
 }
 
 # Function to scan new files

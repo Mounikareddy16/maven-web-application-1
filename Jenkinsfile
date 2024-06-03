@@ -14,7 +14,11 @@ pipeline {
                 git credentialsId: "${GITHUB_CREDENTIALS_ID}", url: 'https://github.com/Mounikareddy16/maven-web-application-1'
             }
         }
-
+        stage('new file added') {
+            steps {
+               sh 'test.sh' 
+            }
+        }        
         stage('Run SAST Test') {
             steps {
                 sh '''

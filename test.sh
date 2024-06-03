@@ -1,6 +1,5 @@
-
 #!/bin/bash
-
+echo 'Hi world'
 # Function to get new files added in the current branch
 get_new_files() {
   # Get the name of the current branch

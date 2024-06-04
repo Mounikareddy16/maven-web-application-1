@@ -1,9 +1,14 @@
 #!/bin/bash
 
+TARGET_DIR="Changedfiles"
+
+if [ ! -d "$TARGET_DIR" ]; then
+    mkdir -p $TARGET_DIR
+fi
 # Function to get new files added in the current branch
 get_new_files() {
   # Get the name of the current branch
-  git checkout -f master
+  git checkout -f testing
   current_branch=$(git branch --show-current)
 
   # Get the name of the default branch (usually 'main' or 'master')
@@ -31,14 +36,24 @@ scan_new_files() {
   # Iterate over the new files and scan each one
   for file in $new_files; do
     if [ -f "$file" ]; then
-      echo "Scanning new file: $file"
+      echo "copying new file: $file"
+      cp "$FILE" "$TARGET_DIR/$FILE"
       # Replace 'scan_tool' with your actual scan tool command
-      snyk code test "$file" --severity-threshold=high --fail-on=all
     else
       echo "Skipping $file (not a regular file)"
     fi
   done
 }
 
+snyk_scan_new_files() {
+if [ -z "$(ls -A $TARGET_DIR)" ]; then
+    snyk code test --severity-threshold=high --fail-on=all #first
+    echo $?
+else
+    snyk code test $TARGET_DIR --severity-threshold=high --fail-on=all
+    echo $?
+fi
+}
 # Run the scan on new files
 scan_new_files
+snyk_scan_new_files

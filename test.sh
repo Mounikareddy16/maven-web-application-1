@@ -4,6 +4,9 @@ TARGET_DIR="Changedfiles"
 
 if [ ! -d "$TARGET_DIR" ]; then
     mkdir -p $TARGET_DIR
+else
+   rm -rf $TARGET_DIR
+   mkdir -p $TARGET_DIR
 fi
 # Function to get new files added in the current branch
 get_new_files() {

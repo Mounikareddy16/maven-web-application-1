@@ -1,23 +1,21 @@
 #!/bin/bash
-echo 'hello world'
+
 # Function to get new files added in the current branch
 get_new_files() {
   # Get the name of the current branch
+  git checkout -f testing
   current_branch=$(git branch --show-current)
-  print $current_branch
-  current_branch='testing'
 
   # Get the name of the default branch (usually 'main' or 'master')
   default_branch=$(git remote show origin | grep 'HEAD branch' | cut -d' ' -f5)
 
   # Fetch the latest changes from the remote
-  git fetch testing
+  git fetch origin
 
   # Get the list of new files added in the current branch compared to the default branch
-  #new_files=$(git diff --name-only --diff-filter=A origin/$default_branch...$current_branch)
-  git checkout master
-  new_files=bash.sh
-
+  #new_files=$(git diff --name-only --diff-filter=A origin/master..testing)
+  new_files=$(git diff --name-only --diff-filter=A origin/$default_branch...$current_branch)
+  
   echo "$new_files"
 }
 

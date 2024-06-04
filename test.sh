@@ -9,7 +9,7 @@ fi
 get_new_files() {
   # Get the name of the current branch
   git checkout -f testing
-  current_branch=$(git branch --show-current)
+  #current_branch=$(git branch --show-current)
 
   # Get the name of the default branch (usually 'main' or 'master')
   default_branch=$(git remote show origin | grep 'HEAD branch' | cut -d' ' -f5)

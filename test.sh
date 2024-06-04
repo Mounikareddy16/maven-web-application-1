@@ -13,7 +13,7 @@ get_new_files() {
   # Get the name of the current branch
   git checkout -f testing
   current_branch=$(git branch --show-current)
-  echo $"current_branch"
+  echo $current_branch
 
   # Get the name of the default branch (usually 'main' or 'master')
   default_branch="master"

@@ -12,7 +12,8 @@ get_new_files() {
   #current_branch=$(git branch --show-current)
 
   # Get the name of the default branch (usually 'main' or 'master')
-  default_branch=$(git remote show origin | grep 'HEAD branch' | cut -d' ' -f5)
+  default_branch="master"
+  #default_branch=$(git remote show origin | grep 'HEAD branch' | cut -d' ' -f5)
 
   # Fetch the latest changes from the remote
   git fetch origin

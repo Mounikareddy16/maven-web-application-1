@@ -11,7 +11,7 @@ fi
 # Function to get new files added in the current branch
 get_new_files() {
   # Get the name of the current branch
-  #git checkout -f testing
+  git checkout -f testing
   current_branch=$(git branch --show-current)
   echo $current_branch
 
@@ -60,5 +60,6 @@ else
 fi
 }
 # Run the scan on new files
+get_new_files
 scan_new_files
 snyk_scan_new_files

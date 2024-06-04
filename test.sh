@@ -11,6 +11,7 @@ fi
 # Function to get new files added in the current branch
 get_new_files() {
   # Get the name of the current branch
+  git log --pretty=format:"%h - %an, %ar : %s"
   git checkout -f testing
   current_branch=$(git branch --show-current)
   echo $current_branch

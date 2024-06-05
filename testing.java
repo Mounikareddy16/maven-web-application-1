@@ -1,39 +1,55 @@
 import java.io.IOException;
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.ResultSet;
-import java.sql.Statement;
+import java.security.SecureRandom;
+import java.util.Random;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-public class VulnerableServlet extends HttpServlet {
+public class InsecureServlet extends HttpServlet {
 
-    // Hardcoded credentials (Insecure)
-    private static final String DB_URL = "jdbc:mysql://localhost:3306/mydb";
-    private static final String DB_USER = "root";
-    private static final String DB_PASSWORD = "password";
+    // Using insecure Random class
+    private static final Random RANDOM = new Random();
 
-    protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        String userInput = request.getParameter("userInput");
-        
-        // SQL Injection vulnerability
-        String query = "SELECT * FROM users WHERE username = '" + userInput + "'";
-        
-        try (Connection conn = DriverManager.getConnection(DB_URL, DB_USER, DB_PASSWORD);
-             Statement stmt = conn.createStatement();
-             ResultSet rs = stmt.executeQuery(query)) {
-             
-            while (rs.next()) {
-                // XSS vulnerability
-                String userData = rs.getString("data");
-                response.getWriter().println("<html><body>");
-                response.getWriter().println("User Data: " + userData); // User data is not sanitized
-                response.getWriter().println("</body></html>");
-            }
+    protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        String username = request.getParameter("username");
+        String password = request.getParameter("password");
+
+        // Logging sensitive information (Insecure)
+        System.out.println("Received login request from username: " + username + " with password: " + password);
+
+        // Improper input validation
+        if (username == null || password == null) {
+            response.getWriter().println("Username or password cannot be null");
+            return;
+        }
+
+        // Weak password check (Insecure)
+        if (password.length() < 8) {
+            response.getWriter().println("Password is too short");
+            return;
+        }
+
+        // Insecure random number generation
+        int verificationCode = RANDOM.nextInt(999999);
+        response.getWriter().println("Your verification code is: " + verificationCode);
+
+        // Lack of error handling
+        try {
+            // Simulate some processing that could fail
+            processUserLogin(username, password);
         } catch (Exception e) {
+            // Not handling the exception properly
             e.printStackTrace();
         }
+    }
+
+    private void processUserLogin(String username, String password) throws Exception {
+        // Simulate processing
+        if ("error".equals(username)) {
+            throw new Exception("Simulated processing error");
+        }
+        // Assume the login is always successful
+        System.out.println("User " + username + " logged in successfully with password: " + password);
     }
 }

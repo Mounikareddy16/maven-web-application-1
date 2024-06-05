@@ -22,7 +22,8 @@ get_new_files() {
 
   # Get the list of new files added in the current branch compared to the default branch
   #new_files=$(git diff --name-only --diff-filter=A origin/master..testing)
-  new_files=$(git diff --name-only --diff-filter=AM origin/$default_branch...$current_branch)
+  new_files=$(git diff --name-only --diff-filter=A origin/$default_branch...$current_branch)
+  #modified_files=$(git diff --name-only --diff-filter=M origin/$default_branch...$current_branch)
   
   echo "$new_files"
 }
@@ -34,14 +35,12 @@ scan_new_files() {
   if [ -z "$new_files" ]; then
     echo "No new files to scan."
     exit 0
-  fi
-
+  fi  
   # Iterate over the new files and scan each one
   for file in $new_files; do
     if [ -f "$file" ]; then
       echo "copying new file: $file"
       cp "$file" "$TARGET_DIR/$file"
-      # Replace 'scan_tool' with your actual scan tool command
     else
       echo "Skipping $file (not a regular file)"
     fi

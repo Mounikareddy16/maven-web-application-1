@@ -37,7 +37,7 @@ scan_new_files() {
   # Iterate over the new files and scan each one
   for file in $new_files; do
     if [ -f "$file" ]; then
-    file_test="$file" | sed "s/.*\///"
+      file_test="$file" | sed "s/.*\///"
       echo "copying new file: $file"
       cp -f "$file" "$TARGET_DIR/$file_test"
     else

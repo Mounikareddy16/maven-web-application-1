@@ -9,9 +9,17 @@ pipeline {
         nodejs 'NodeJS'  // Use the name of the NodeJS installation defined in Jenkins
     }
     stages {	
-        stage('Clone Repository') {
+        stage('Checkout') {
             steps {
-                git credentialsId: "${GITHUB_CREDENTIALS_ID}", url: 'https://github.com/Mounikareddy16/maven-web-application-1'
+                // Check out the specific branch
+                checkout([
+                    $class: 'GitSCM',
+                    branches: [[name: env.BRANCH_NAME]],
+                    doGenerateSubmoduleConfigurations: false,
+                    extensions: [],
+                    submoduleCfg: [],
+                    userRemoteConfigs: [[url: 'https://github.com/Mounikareddy16/maven-web-application-1']]
+                ])
             }
         }
         stage('new file added') {

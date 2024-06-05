@@ -3,10 +3,10 @@
 TARGET_DIR="Changedfiles"
 
 if [ ! -d "$TARGET_DIR" ]; then
-    mkdir -p $TARGET_DIR
+    mkdir -m 777 -p $TARGET_DIR
 else
    rm -rf $TARGET_DIR
-   mkdir -p $TARGET_DIR
+   mkdir -m 777 -p $TARGET_DIR
 fi
 chmod -R 777 Changedfiles
 # Function to get new files added in the current branch
@@ -41,7 +41,7 @@ scan_new_files() {
   for file in $new_files; do
     if [ -f "$file" ]; then
       echo "copying new file: $file"
-      sudo cp -R "$file" "$TARGET_DIR/$file"
+      cp -f "$file" "$TARGET_DIR/$file"
     else
       echo "Skipping $file (not a regular file)"
     fi

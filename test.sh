@@ -8,7 +8,7 @@ else
    rm -rf $TARGET_DIR
    mkdir -p $TARGET_DIR
 fi
-chmod -R u+w Changedfiles
+chmod -R 777 Changedfiles
 # Function to get new files added in the current branch
 get_new_files() {
   # Get the name of the current branch

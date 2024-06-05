@@ -41,7 +41,7 @@ scan_new_files() {
   for file in $new_files; do
     if [ -f "$file" ]; then
       echo "copying new file: $file"
-      cp "$file" "$TARGET_DIR/$file"
+      cp -R "$file" "$TARGET_DIR/$file"
     else
       echo "Skipping $file (not a regular file)"
     fi

@@ -11,10 +11,8 @@ fi
 # Function to get new files added in the current branch
 get_new_files() {
   # Get the name of the current branch
-  #git checkout -f test1
   current_branch=$(git branch --show-current)
-  echo $current_branch
-
+  
   # Get the name of the default branch (usually 'main' or 'master')
   default_branch="master"
   #default_branch=$(git remote show origin | grep 'HEAD branch' | cut -d' ' -f5)
@@ -24,7 +22,7 @@ get_new_files() {
 
   # Get the list of new files added in the current branch compared to the default branch
   #new_files=$(git diff --name-only --diff-filter=A origin/master..testing)
-  new_files=$(git diff --name-only --diff-filter=A origin/$default_branch...$current_branch)
+  new_files=$(git diff --name-only --diff-filter=AM origin/$default_branch...$current_branch)
   
   echo "$new_files"
 }

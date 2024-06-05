@@ -3,12 +3,11 @@
 TARGET_DIR="Changedfiles"
 
 if [ ! -d "$TARGET_DIR" ]; then
-    mkdir -m 777 -p $TARGET_DIR
+    mkdir -p $TARGET_DIR
 else
    rm -rf $TARGET_DIR
-   mkdir -m 777 -p $TARGET_DIR
+   mkdir -p $TARGET_DIR
 fi
-chmod -R 777 Changedfiles
 # Function to get new files added in the current branch
 get_new_files() {
   # Get the name of the current branch
@@ -22,9 +21,7 @@ get_new_files() {
   git fetch origin
 
   # Get the list of new files added in the current branch compared to the default branch
-  #new_files=$(git diff --name-only --diff-filter=A origin/master..testing)
   new_files=$(git diff --name-only --diff-filter=AM origin/$default_branch...$current_branch)
-  #modified_files=$(git diff --name-only --diff-filter=M origin/$default_branch...$current_branch)
   
   echo "$new_files"
 }
@@ -40,8 +37,9 @@ scan_new_files() {
   # Iterate over the new files and scan each one
   for file in $new_files; do
     if [ -f "$file" ]; then
+    file_test="$file" | sed "s/.*\///"
       echo "copying new file: $file"
-      cp -f "$file" "$TARGET_DIR/$file"
+      cp -f "$file" "$TARGET_DIR/$file_test"
     else
       echo "Skipping $file (not a regular file)"
     fi

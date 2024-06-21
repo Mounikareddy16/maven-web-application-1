@@ -40,7 +40,7 @@ pipeline {
             }
         stage('Run SCA Scan') {
             steps {
-                sh 'snyk test'
+                sh 'snyk test --json>report.json'
              }
         }   
     

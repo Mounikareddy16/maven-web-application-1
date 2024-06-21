@@ -36,7 +36,14 @@ pipeline {
                 '''
                }
             }
+        stage('Run SCA Scan') {
+            steps {
+                sh 'snyk test --file=pom.xml'
+             }
+        }   
     
-        }
     }
+  
+}
+
 

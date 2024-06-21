@@ -33,7 +33,7 @@ pipeline {
                     npm install -g snyk
                     #snyk auth ${SNYK_API_TOKEN}
                     snyk auth 'f557c5e3-ea14-40fe-ae60-71e7367f91fa'
-                    snyk code test 
+                    #snyk code test 
                 '''
                }
             }

@@ -32,7 +32,6 @@ pipeline {
         stage('Run SAST Test') {
             steps {
                 sh '''
-                    #npm install -g snyk
                     #snyk auth ${SNYK_API_TOKEN}
                     snyk auth 'f557c5e3-ea14-40fe-ae60-71e7367f91fa'
                     #snyk code test 
@@ -41,7 +40,7 @@ pipeline {
             }
         stage('Run SCA Scan') {
             steps {
-                sh 'snyk test --file=pom.xml'
+                sh 'snyk test'
              }
         }   
     

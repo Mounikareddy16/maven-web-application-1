@@ -7,8 +7,8 @@ pipeline {
     }
     tools {
         nodejs 'NodeJS'  // Use the name of the NodeJS installation defined in Jenkins
-        maven 
-        java
+        maven 'maven'
+        jdk 'java'
     }
     stages {		
         stage('Checkout') {

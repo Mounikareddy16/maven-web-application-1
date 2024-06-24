@@ -41,6 +41,12 @@ pipeline {
         stage('Run SCA Scan') {
             steps {
                 sh 'snyk test --json>report.json'
+
+             }
+
+         } 
+        stage('Monitor') {
+            steps {
                 sh 'snyk monitor --org=mouni.prani16 --project-name=Mounikareddy16/maven-web-application-1'
 
              }

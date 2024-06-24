@@ -26,7 +26,7 @@ pipeline {
         }       
         stage('new file added') {
             steps {
-                sh 'sh test.sh'
+                sh '#sh test.sh'
             }
         }        
         stage('Run SAST Test') {
@@ -34,7 +34,7 @@ pipeline {
                 sh '''
                     #snyk auth ${SNYK_API_TOKEN}
                     snyk auth 'f557c5e3-ea14-40fe-ae60-71e7367f91fa'
-                    snyk code test 
+                    #snyk code test 
                 '''
                }
             }

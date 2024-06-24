@@ -26,7 +26,7 @@ pipeline {
         }       
         stage('new file added') {
             steps {
-               sh 'sh test.sh'
+               # 'sh test.sh'
             }
         }        
         stage('Run SAST Test') {

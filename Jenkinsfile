@@ -44,14 +44,14 @@ pipeline {
                 sh 'echo $?'
 
              }
+             post {
+                always {
+                     sh 'snyk monitor --org=mouni.prani16 --project-name=Mounikareddy16/maven-web-application-1'
+               }
+          }
 
          } 
-        stage('Monitor') {
-            steps {
-                sh 'snyk monitor --org=mouni.prani16 --project-name=Mounikareddy16/maven-web-application-1'
 
-             }
-        }   
     
     }
   

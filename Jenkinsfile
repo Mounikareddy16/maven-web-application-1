@@ -50,6 +50,18 @@ pipeline {
            }
 
        } 
+        stage('Run IAC Scan') {
+            steps {
+                sh 'snyk iac test iac --json > iac_report.json'
+
+             }
+             post {
+                always {
+                     sh 'snyk monitor --org=mouni.prani16 --project-name=Mounikareddy16/maven-web-application-1'
+               }
+           }
+
+       }        
 
     }
   

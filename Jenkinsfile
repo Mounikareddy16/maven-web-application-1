@@ -58,19 +58,13 @@ pipeline {
              post {
                 always {
                      sh 'snyk monitor --org=mouni.prani16 --project-name=Mounikareddy16/maven-web-application-1'
+                     cleanWs notFailBuild: true, patterns: [[pattern: 'Changedfiles/*', type: 'EXCLUDE'],
+                                                          [pattern: 'iac_report.json', type: 'EXCLUDE']]
                }
            }
 
        }
-         stage('Workspace Cleanup') {
-             steps {
-                 script {
-                    // Clean up workspace but exclude specified files
-                     cleanWs notFailBuild: true, patterns: [[pattern: 'Changedfiles/*', type: 'EXCLUDE'],
-                                                          [pattern: 'iac_report.json', type: 'EXCLUDE']]
-                }
-            }
-        }        
+        
 
     }
   

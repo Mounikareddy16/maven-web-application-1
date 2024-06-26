@@ -61,7 +61,16 @@ pipeline {
                }
            }
 
-       }        
+       }
+         stage('Workspace Cleanup') {
+             steps {
+                 script {
+                    // Clean up workspace but exclude specified files
+                     cleanWs notFailBuild: true, patterns: [[pattern: 'Changedfiles/*', type: 'EXCLUDE'],
+                                                          [pattern: 'iac_report.json', type: 'EXCLUDE']]
+                }
+            }
+        }        
 
     }
   

@@ -52,7 +52,7 @@ pipeline {
        } 
         stage('Run IAC Scan') {
             steps {
-                sh 'snyk iac test k8s.yml > iac_report.json --report'
+                sh 'snyk iac test > iac_report.json --report'
 
              }
              post {

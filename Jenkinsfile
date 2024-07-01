@@ -36,27 +36,15 @@ pipeline {
                     userRemoteConfigs: [[url: 'https://github.com/Mounikareddy16/maven-web-application-1']]
                 ])
             }
-        }       
-        stage('new file added') {
+        }         
+        stage('RUN SAST Test') {
             when {
-                expression { return params.RUN_NEW_FILE_ADDED }
+                expression { return params.RUN_SAST_TEST }
             }
             steps {
                 sh 'sh test.sh'
             }
         }        
-        stage('Run SAST Test') {
-            when {
-                expression { return params.RUN_SAST_TEST }
-            }
-            steps {
-                sh '''
-                    #snyk auth ${SNYK_API_TOKEN}
-                    snyk auth 'f557c5e3-ea14-40fe-ae60-71e7367f91fa'
-                    snyk code test 
-                '''
-            }
-        }
         stage('Run SCA Scan') {
             when {
                 expression { return params.RUN_SCA_SCAN }
@@ -80,7 +68,8 @@ pipeline {
             }
             post {
                 always {
-                    cleanWs notFailBuild: true, patterns: [[pattern: 'iac_report.json', type: 'EXCLUDE']]
+                    cleanWs notFailBuild: true, patterns: [[pattern: 'iac_report.json', type: 'EXCLUDE'],
+                                                           [pattern: 'sca_report.json', type: 'EXCLUDE']]
                 }
             }
         }

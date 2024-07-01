@@ -62,7 +62,7 @@ pipeline {
                 expression { return params.RUN_SCA_SCAN }
             }
             steps {
-                sh '#snyk test --json>report.json'
+                sh 'snyk test --json>report.json'
             }
             post {
                 always {

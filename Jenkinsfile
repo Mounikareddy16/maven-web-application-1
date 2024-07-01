@@ -62,11 +62,12 @@ pipeline {
                 expression { return params.RUN_SCA_SCAN }
             }
             steps {
-                sh 'snyk test --json>report.json'
+                sh 'snyk test --json>sca_report.json'
             }
             post {
                 always {
                     sh 'snyk monitor --org=mouni.prani16 --project-name=Mounikareddy16/maven-web-application-1'
+                    cleanWs notFailBuild: true, patterns: [[pattern: 'sca_report.json', type: 'EXCLUDE']]
                 }
             }
         } 
@@ -79,7 +80,6 @@ pipeline {
             }
             post {
                 always {
-                    sh 'snyk monitor --org=mouni.prani16 --project-name=Mounikareddy16/maven-web-application-1'
                     cleanWs notFailBuild: true, patterns: [[pattern: 'iac_report.json', type: 'EXCLUDE']]
                 }
             }

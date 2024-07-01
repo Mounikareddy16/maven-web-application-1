@@ -48,10 +48,10 @@ scan_new_files() {
 
 snyk_scan_new_files() {
 if [ -z "$(ls -A $TARGET_DIR)" ]; then
-    #snyk code test --severity-threshold=high --fail-on=all #first
+    snyk code test --severity-threshold=high --fail-on=all #first
     echo $?
 else
-    #snyk code test $TARGET_DIR --severity-threshold=high --fail-on=all
+    snyk code test $TARGET_DIR --severity-threshold=high --fail-on=all
     echo $?
 fi
 }

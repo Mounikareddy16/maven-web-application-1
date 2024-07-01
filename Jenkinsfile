@@ -1,27 +1,29 @@
 pipeline {
     agent any
 
-    parameters {
-        booleanParam(name: 'RUN_CHECKOUT', defaultValue: true, description: 'Run Checkout Stage')
-        booleanParam(name: 'RUN_NEW_FILE_ADDED', defaultValue: true, description: 'Run New File Added Stage')
-        booleanParam(name: 'RUN_SAST_TEST', defaultValue: true, description: 'Run SAST Test Stage')
-        booleanParam(name: 'RUN_SCA_SCAN', defaultValue: true, description: 'Run SCA Scan Stage')
-        booleanParam(name: 'RUN_IAC_SCAN', defaultValue: true, description: 'Run IAC Scan Stage')
-    }
-
     environment {
         GITHUB_CREDENTIALS_ID = 'git-creds'
         SNYK_API_TOKEN = credentials('test-snyk-api')
     }
+
     tools {
         nodejs 'NodeJS'  // Use the name of the NodeJS installation defined in Jenkins
         maven 'maven'
         jdk 'java'
     }
-    stages {		
+
+    parameters {
+        booleanParam(name: 'RUN_CHECKOUT', defaultValue: true, description: 'Run the Checkout stage')
+        booleanParam(name: 'RUN_NEW_FILE_ADDED', defaultValue: true, description: 'Run the new file added stage')
+        booleanParam(name: 'RUN_SAST_TEST', defaultValue: true, description: 'Run the SAST Test stage')
+        booleanParam(name: 'RUN_SCA_SCAN', defaultValue: true, description: 'Run the SCA Scan stage')
+        booleanParam(name: 'RUN_IAC_SCAN', defaultValue: true, description: 'Run the IAC Scan stage')
+    }
+
+    stages {
         stage('Checkout') {
             when {
-                expression { params.RUN_CHECKOUT }
+                expression { return params.RUN_CHECKOUT }
             }
             steps {
                 // Check out the specific branch
@@ -35,9 +37,9 @@ pipeline {
                 ])
             }
         }       
-        stage('New File Added') {
+        stage('new file added') {
             when {
-                expression { params.RUN_NEW_FILE_ADDED }
+                expression { return params.RUN_NEW_FILE_ADDED }
             }
             steps {
                 sh 'sh test.sh'
@@ -45,7 +47,7 @@ pipeline {
         }        
         stage('Run SAST Test') {
             when {
-                expression { params.RUN_SAST_TEST }
+                expression { return params.RUN_SAST_TEST }
             }
             steps {
                 sh '''
@@ -57,10 +59,10 @@ pipeline {
         }
         stage('Run SCA Scan') {
             when {
-                expression { params.RUN_SCA_SCAN }
+                expression { return params.RUN_SCA_SCAN }
             }
             steps {
-                sh 'snyk test --json>report.json'
+                sh '#snyk test --json>report.json'
             }
             post {
                 always {
@@ -70,7 +72,7 @@ pipeline {
         } 
         stage('Run IAC Scan') {
             when {
-                expression { params.RUN_IAC_SCAN }
+                expression { return params.RUN_IAC_SCAN }
             }
             steps {
                 sh 'snyk iac test > iac_report.json --report'

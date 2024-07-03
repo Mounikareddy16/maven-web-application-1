@@ -17,6 +17,7 @@ pipeline {
         booleanParam(name: 'RUN_SAST_TEST', defaultValue: true, description: 'Run the SAST Test stage')
         booleanParam(name: 'RUN_SCA_SCAN', defaultValue: true, description: 'Run the SCA Scan stage')
         booleanParam(name: 'RUN_IAC_SCAN', defaultValue: true, description: 'Run the IAC Scan stage')
+        booleanParam(name: 'RUN_CONTAINER_SCAN', defaultValue: true, description: 'Run the container Scan stage')
     }
 
     stages {

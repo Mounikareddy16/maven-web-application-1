@@ -80,7 +80,7 @@ pipeline {
             }
             steps {
                 script {
-                     sh 'docker images'
+                     sh 'docker pull deepaklohar/hellocd:1.0.0'
                 }
                 sh '#docker scan mounikareddy16/maven-web-application-1:${env.BUILD_ID} --file Dockerfile > container_scan_report.json'
             }

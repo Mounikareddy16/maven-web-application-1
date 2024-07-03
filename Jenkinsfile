@@ -80,7 +80,7 @@ pipeline {
             }
             steps {
                 script {
-                    dockerImage = docker.build("mounikareddy16/maven-web-application-1:${env.BUILD_ID}")
+                     docker image ls
                 }
                 sh 'docker scan mounikareddy16/maven-web-application-1:${env.BUILD_ID} --file Dockerfile > container_scan_report.json'
             }

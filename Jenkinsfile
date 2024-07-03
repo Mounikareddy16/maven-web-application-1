@@ -72,5 +72,10 @@ pipeline {
                 }
             }
         }
+        stage('Run Container scan') {
+            steps {
+                docker image ls
+            }
+        }
     }
 }

@@ -74,6 +74,9 @@ pipeline {
             }
         }
         stage('Run Container scan') {
+            when {
+                expression { return params.RUN_CONTAINER_SCAN }
+            }            
             steps {
                 docker image ls
             }

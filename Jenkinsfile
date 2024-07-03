@@ -82,7 +82,7 @@ pipeline {
                 script {
                      sh 'docker pull deepaklohar/hellocd:1.0.0'
                 }
-                sh '#docker scan mounikareddy16/maven-web-application-1:${env.BUILD_ID} --file Dockerfile > container_scan_report.json'
+                sh 'snyk container test deepaklohar/hellocd:1.0.0 --json > container_scan_report.json'
             }
             post {
                 always {

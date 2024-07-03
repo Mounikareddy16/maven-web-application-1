@@ -10,18 +10,22 @@ pipeline {
         nodejs 'NodeJS'  // Use the name of the NodeJS installation defined in Jenkins
         maven 'maven'
         jdk 'java'
-        docker 'docker'
+        dockerTool 'docker'  // Add Docker tool
     }
 
     parameters {
+        booleanParam(name: 'RUN_CHECKOUT', defaultValue: true, description: 'Run the Checkout stage')
         booleanParam(name: 'RUN_SAST_TEST', defaultValue: true, description: 'Run the SAST Test stage')
         booleanParam(name: 'RUN_SCA_SCAN', defaultValue: true, description: 'Run the SCA Scan stage')
         booleanParam(name: 'RUN_IAC_SCAN', defaultValue: true, description: 'Run the IAC Scan stage')
-        booleanParam(name: 'RUN_CONTAINER_SCAN', defaultValue: true, description: 'Run the container Scan stage')
+        booleanParam(name: 'RUN_CONTAINER_SCAN', defaultValue: true, description: 'Run the Container Scan stage')
     }
 
     stages {
         stage('Checkout') {
+            when {
+                expression { return params.RUN_CHECKOUT }
+            }
             steps {
                 // Check out the specific branch
                 checkout([
@@ -70,12 +74,22 @@ pipeline {
                 }
             }
         }
-        stage('Run Container scan') {
+        stage('Run Container Scan') {
             when {
                 expression { return params.RUN_CONTAINER_SCAN }
-            }            
+            }
             steps {
-                sh docker image ls
+                script {
+                    dockerImage = docker.build("mounikareddy16/maven-web-application-1:${env.BUILD_ID}")
+                }
+                sh 'docker scan mounikareddy16/maven-web-application-1:${env.BUILD_ID} --file Dockerfile > container_scan_report.json'
+            }
+            post {
+                always {
+                    cleanWs notFailBuild: true, patterns: [[pattern: 'container_scan_report.json', type: 'EXCLUDE'],
+                                                           [pattern: 'iac_report.json', type: 'EXCLUDE'],
+                                                           [pattern: 'sca_report.json', type: 'EXCLUDE']]
+                }
             }
         }
     }

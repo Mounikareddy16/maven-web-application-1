@@ -78,7 +78,7 @@ pipeline {
                 expression { return params.RUN_CONTAINER_SCAN }
             }            
             steps {
-                docker image ls
+                sh docker image ls
             }
         }
     }

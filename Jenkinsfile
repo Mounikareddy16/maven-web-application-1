@@ -80,9 +80,10 @@ pipeline {
             }
             steps {
                 script {
-                     sh 'docker pull deepaklohar/hellocd:1.0.0'
-                }
-                sh 'snyk container test deepaklohar/hellocd:1.0.0 --json > container_scan_report.json'
+                     sh '''
+                       docker pull deepaklohar/petclini:V2
+                       snyk container test deepaklohar/petclini:V2 --json > container_scan_report.json
+                  ''' 
             }
             post {
                 always {

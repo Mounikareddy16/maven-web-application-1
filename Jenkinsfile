@@ -10,10 +10,10 @@ pipeline {
         nodejs 'NodeJS'  // Use the name of the NodeJS installation defined in Jenkins
         maven 'maven'
         jdk 'java'
+        docker 'docker'
     }
 
     parameters {
-        booleanParam(name: 'RUN_CHECKOUT', defaultValue: true, description: 'Run the Checkout stage')
         booleanParam(name: 'RUN_SAST_TEST', defaultValue: true, description: 'Run the SAST Test stage')
         booleanParam(name: 'RUN_SCA_SCAN', defaultValue: true, description: 'Run the SCA Scan stage')
         booleanParam(name: 'RUN_IAC_SCAN', defaultValue: true, description: 'Run the IAC Scan stage')
@@ -22,9 +22,6 @@ pipeline {
 
     stages {
         stage('Checkout') {
-            when {
-                expression { return params.RUN_CHECKOUT }
-            }
             steps {
                 // Check out the specific branch
                 checkout([

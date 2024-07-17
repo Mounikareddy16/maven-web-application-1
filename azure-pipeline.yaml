@@ -2,7 +2,7 @@ trigger:
 - feature
 
 pool:
-  name: 'ubuntu'  # or the name of your self-hosted agent pool
+  vmImage: 'ubuntu'
 
 variables:
   SNYK_TOKEN: $(snykApiToken)
@@ -14,10 +14,10 @@ steps:
     
 - script: npm install -g snyk
   displayName: 'Install Snyk CLI'
+
+- script: snyk auth $(SNYK_TOKEN)
+  displayName: 'Authenticate Snyk CLI'
   
-- task: SnykSecurityScan@0
-  inputs:
-    authToken: $(SNYK_TOKEN)
-    command: test
-    args: '--all-projects --severity-threshold=high --json'
+- script: snyk code test --json
   displayName: 'Run Snyk SAST Scan'
+

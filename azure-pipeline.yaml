@@ -1,0 +1,23 @@
+trigger:
+- feature
+
+pool:
+  vmImage: 'ubuntu-latest'
+
+variables:
+  SNYK_TOKEN: $(snykApiToken)
+
+steps:
+- task: UseNode@1
+  inputs:
+    version: '16.x'
+    
+- script: npm install -g snyk
+  displayName: 'Install Snyk CLI'
+  
+- task: SnykSecurityScan@0
+  inputs:
+    authToken: $(SNYK_TOKEN)
+    command: test
+    args: '--all-projects --severity-threshold=high --json'
+  displayName: 'Run Snyk SAST Scan'

@@ -2,7 +2,7 @@ trigger:
 - feature
 
 pool:
-  name: 'Default'  # or the name of your self-hosted agent pool
+  name: 'ubuntu'  # or the name of your self-hosted agent pool
 
 variables:
   SNYK_TOKEN: $(snykApiToken)

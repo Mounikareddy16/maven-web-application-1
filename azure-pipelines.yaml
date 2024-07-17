@@ -2,8 +2,8 @@ trigger:
 - feature
 
 pool:
-  name: 'ubuntu'
-  demands: -agent.name -equals DESKTOP-DV5FTN2
+  name: 'Default'
+  demands: -agent.name -equals vmagent
 
 variables:
   SNYK_TOKEN: $(snykApiToken)

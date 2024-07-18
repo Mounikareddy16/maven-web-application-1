@@ -1,0 +1,23 @@
+trigger:
+- feature
+
+pool:
+  name: 'ubuntu'
+
+variables:
+  SNYK_TOKEN: $(snykApiToken)
+
+steps:
+- task: UseNode@1
+  inputs:
+    version: '16.x'
+    
+- script: npm install -g snyk
+  displayName: 'Install Snyk CLI'
+
+- script: snyk auth $(SNYK_TOKEN)
+  displayName: 'Authenticate Snyk CLI'
+  
+- script: snyk code test --json
+  displayName: 'Run Snyk SAST Scan'
+

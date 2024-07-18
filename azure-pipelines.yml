@@ -18,5 +18,5 @@ steps:
 - script: snyk auth $(SNYK_TOKEN)
   displayName: 'Authenticate Snyk CLI'
   
-- script: snyk code test --json
+- script: snyk code test --severity-threshold=high --fail-on=all --json
   displayName: 'Run Snyk SAST Scan'

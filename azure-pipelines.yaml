@@ -2,8 +2,7 @@ trigger:
 - feature
 
 pool:
-  name: 'Default'
-  demands: -agent.name -equals vmagent
+  name: 'ubuntu'
 
 variables:
   SNYK_TOKEN: $(snykApiToken)

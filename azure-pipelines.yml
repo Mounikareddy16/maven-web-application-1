@@ -5,27 +5,51 @@ pool:
   name: 'ubuntu'
 
 variables:
-  SNYK_TOKEN: $(snykApiToken)
+  SNYK_TOKEN: $(SNYK_TOKEN)  # Make sure to add this variable in your pipeline settings
 
-steps:
-- task: UseNode@1
-  inputs:
-    version: '16.x'
-    
-- script: npm install -g snyk
-  displayName: 'Install Snyk CLI'
+parameters:
+- name: runSAST
+  type: boolean
+  default: true
+  displayName: 'Run SAST Scan'
 
-- script: snyk auth $(SNYK_TOKEN)
-  displayName: 'Authenticate Snyk CLI'
-  
-- script: snyk code test --severity-threshold=high --fail-on=all 
-  displayName: 'Run Snyk SAST Scan'
+- name: runSCA
+  type: boolean
+  default: true
+  displayName: 'Run SCA Scan'
 
-- script: snyk test --json >sca_report.json
-  displayName: 'Snyk Test (SCA)'
+- name: runIaC
+  type: boolean
+  default: true
+  displayName: 'Run IaC Scan'
 
-- script: snyk iac test >iac_report.json --report
-  displayName: 'Snyk IaC Test'
+stages:
+- stage: Scan
+  jobs:
+  - job: SnykScans
+    steps:
+    - task: UseNode@1
+      inputs:
+        versionSpec: '14.x'
+        checkLatest: true
 
-- script: snyk monitor
-  displayName: 'Snyk Monitor'
+    - script: npm install -g snyk
+      displayName: 'Install Snyk CLI'
+
+    - script: snyk auth $(SNYK_TOKEN)
+      displayName: 'Authenticate Snyk'
+
+    - ${{ if parameters.runSAST }}:
+      - script: snyk code test --severity-threshold=high --fail-on=all
+        displayName: 'Snyk Code Test (SAST)'
+
+    - ${{ if parameters.runSCA }}:
+      - script: snyk test --json >sca_repot.json
+        displayName: 'Snyk Test (SCA)'
+
+    - ${{ if parameters.runIaC }}:
+      - script: snyk iac test >iac_report.json --report
+        displayName: 'Snyk IaC Test'
+
+    - script: snyk monitor
+      displayName: 'Snyk Monitor'
